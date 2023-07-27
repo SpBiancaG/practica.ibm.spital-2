@@ -8,6 +8,7 @@ import com.ibm.practica.spital.entity.Pacient;
 import com.ibm.practica.spital.entity.Reservation;
 import com.ibm.practica.spital.repository.PacientRepository;
 import com.ibm.practica.spital.repository.ReservationRepository;
+import jakarta.transaction.Transactional;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.ObjectUtils;
 import org.modelmapper.ModelMapper;
@@ -21,6 +22,7 @@ import java.util.stream.Collectors;
 
 @Service
 @Log4j2
+@Transactional
 public class SpitalService {
 
  @Autowired
@@ -118,7 +120,9 @@ public class SpitalService {
 //  pacientRepository.deleteById(pacientID);
 
   // Option 2
-  return pacientRepository.deletePacient(pacientID) > 0;
+  int deletedRows = pacientRepository.deletePacient(pacientID);
+  log.info("deletePacient() deleted: " + deletedRows + " row(s)");
+  return deletedRows > 0;
  }
 
  public boolean editPacient(PacientDTO pacientDTO){

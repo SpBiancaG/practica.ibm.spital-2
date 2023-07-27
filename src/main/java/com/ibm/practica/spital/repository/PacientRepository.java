@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PacientRepository extends JpaRepository<Pacient,String> {
 
+    @Modifying
     @Query(value ="DELETE FROM pacient WHERE pacient_id = ?1", nativeQuery = true)
-    public int deletePacient(String pacientID);
+    int deletePacient(String pacientID);
 }
